@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Recipe Generator</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+</head>
+
+<body>
+  <link rel="stylesheet" href="style.css">
+<script src="app.js" defer></script>
+    <!-- Header & Navigation -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <i class="fas fa-utensils"></i>
+                <span>SmartRecipe</span>
+            </div>
+            <button class="mobile-menu-btn" id="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav class="mobile-menu" id="mobile-menu">
+                <ul>
+                    <li><a href="#" class="active">Home</a></li>
+                    <li><a href="#ingredients">Ingredients</a></li>
+                    <li><a href="#recipes">Recipes</a></li>
+                    <li><a href="https://github.com/Satyam1042716/smart-recipe-generator">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Create Delicious Meals From Your Ingredients</h1>
+            <p>SmartRecipe helps you discover amazing recipes based on what you have in your kitchen. Reduce food waste and explore new culinary possibilities.</p>
+            <a href="#ingredients" class="btn btn-primary btn-lg">Get Started</a>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Ingredient Input Section -->
+        <section id="ingredients">
+            <h2 class="section-title">Add Your Ingredients</h2>
+            
+            <div class="card">
+                <div class="card-body">
+                    <!-- Text Input -->
+                    <div class="form-group">
+                        <label class="form-label">Type ingredient name:</label>
+                        <div class="input-with-btn">
+                            <input type="text" id="ingredient-input" class="form-control" placeholder="Enter ingredient (e.g., salmon, spinach, quinoa)...">
+                            <button id="add-ingredient-btn" class="btn btn-primary" onclick="addIngredient()">Add Ingredient</button>
+                        </div>
+                    </div>
+
+                    <!-- Image Upload for Ingredient Recognition -->
+                    <div class="image-upload" id="image-upload">
+                        <div class="upload-icon">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                        </div>
+                        <p>Upload an image of your ingredients for recognition</p>
+                        <span class="btn btn-outline">Select Image</span>
+                        <input type="file" id="ingredient-image" accept="image/*" style="display: none;">
+                    </div>
+
+                    <!-- Quick Select Ingredients -->
+                    <div class="quick-select-section">
+                        <h3>Quick Select Ingredients:</h3>
+                        <div class="ingredient-categories">
+                            <div class="category-section">
+                                <h4><i class="fas fa-drumstick-bite"></i> Proteins</h4>
+                                <div class="ingredient-buttons" id="proteins-buttons"></div>
+                            </div>
+                            <div class="category-section">
+                                <h4><i class="fas fa-carrot"></i> Vegetables</h4>
+                                <div class="ingredient-buttons" id="vegetables-buttons"></div>
+                            </div>
+                            <div class="category-section">
+                                <h4><i class="fas fa-apple-alt"></i> Fruits</h4>
+                                <div class="ingredient-buttons" id="fruits-buttons"></div>
+                            </div>
+                            <div class="category-section">
+                                <h4><i class="fas fa-bread-slice"></i> Grains</h4>
+                                <div class="ingredient-buttons" id="grains-buttons"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Selected Ingredients Display -->
+                    <div class="selected-section">
+                        <h3>Your Ingredients (<span id="ingredient-count">0</span>):</h3>
+                        <div id="selected-ingredients" class="selected-ingredients-display">
+                            <!-- Selected ingredients will appear here -->
+                        </div>
+                        <button id="clear-all-btn" class="btn btn-outline btn-sm" onclick="clearAllIngredients()">Clear All</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dietary Preferences & Filters Section -->
+        <section>
+            <h2 class="section-title">Preferences & Filters</h2>
+            
+            <div class="card">
+                <div class="card-body">
+                    <div class="filters">
+                        <!-- Dietary Preferences -->
+                        <div class="filter-group">
+                            <h3 class="filter-title">Dietary Preferences</h3>
+                            <div class="dietary-checkboxes">
+                                <label class="checkbox-item">
+                                    <input type="checkbox" id="vegetarian" value="vegetarian">
+                                    <span>Vegetarian</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" id="vegan" value="vegan">
+                                    <span>Vegan</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" id="gluten-free" value="gluten-free">
+                                    <span>Gluten-Free</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Cooking Time Filter -->
+                        <div class="filter-group">
+                            <h3 class="filter-title">Max Cooking Time (minutes)</h3>
+                            <div class="slider-container">
+                                <input type="range" id="cooking-time" min="0" max="120" value="60" class="form-control">
+                                <span id="cooking-time-value" class="slider-value">60</span>
+                            </div>
+                        </div>
+
+                        <!-- Difficulty Filter -->
+                        <div class="filter-group">
+                            <h3 class="filter-title">Difficulty Level</h3>
+                            <select id="difficulty-filter" class="form-control">
+                                <option value="any">Any Difficulty</option>
+                                <option value="easy">Easy</option>
+                                <option value="medium">Medium</option>
+                                <option value="hard">Hard</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Find Recipes Button -->
+        <section class="search-section">
+            <button id="find-recipes-btn" class="btn btn-primary btn-lg btn-full" onclick="findRecipes()" disabled>
+                <i class="fas fa-search"></i>
+                Find Matching Recipes
+            </button>
+        </section>
+
+        <!-- Recipe Results -->
+        <section id="recipes">
+            <h2 class="section-title">Recipe Suggestions</h2>
+            
+            <div id="recipe-results-container" class="hidden">
+                <div id="match-summary" class="card">
+                    <div class="card-body">
+                        <p>Found <span id="match-count">0</span> recipes matching your ingredients and preferences</p>
+                    </div>
+                </div>
+                
+                <div id="recipe-results" class="recipe-grid">
+                    <!-- Recipe cards will be populated here -->
+                </div>
+            </div>
+            
+            <div id="no-results" class="card">
+                <div class="card-body" style="text-align: center;">
+                    <h3><i class="fas fa-search"></i> Ready to Find Recipes?</h3>
+                    <p>Add ingredients above and click "Find Matching Recipes" to discover delicious recipes you can make!</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Substitute Suggestions -->
+        <section id="substitutes">
+            <h2 class="section-title">Ingredient Substitutions</h2>
+            
+            <div class="card">
+                <div class="card-body">
+                    <p>Don't have all the ingredients? Here are some common substitutions:</p>
+                    
+                    <div class="substitute-list">
+                        <div class="substitute-item">
+                            <span><strong>Butter</strong></span>
+                            <span>Olive oil, coconut oil, or applesauce</span>
+                        </div>
+                        <div class="substitute-item">
+                            <span><strong>Milk</strong></span>
+                            <span>Almond milk, soy milk, or oat milk</span>
+                        </div>
+                        <div class="substitute-item">
+                            <span><strong>Eggs</strong></span>
+                            <span>Flaxseed meal or mashed banana</span>
+                        </div>
+                        <div class="substitute-item">
+                            <span><strong>Sugar</strong></span>
+                            <span>Honey, maple syrup, or stevia</span>
+                        </div>
+                        <div class="substitute-item">
+                            <span><strong>Wheat flour</strong></span>
+                            <span>Almond flour, oat flour, or gluten-free flour blend</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Recipe Details Modal -->
+    <div id="recipe-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-recipe-title"></h2>
+                <button class="modal-close" onclick="closeRecipeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="recipe-details-grid">
+                    <div>
+                        <!-- Recipe Meta Information -->
+                        <div class="recipe-meta">
+                            <p><i class="fas fa-clock"></i> <strong>Cooking Time:</strong> <span id="modal-time"></span> minutes</p>
+                            <p><i class="fas fa-users"></i> <strong>Servings:</strong> <span id="modal-servings"></span></p>
+                            <p><i class="fas fa-tachometer-alt"></i> <strong>Difficulty:</strong> <span id="modal-difficulty"></span></p>
+                        </div>
+
+                        <!-- Nutrition Information -->
+                        <h3><i class="fas fa-chart-pie"></i> Nutrition Information (per serving)</h3>
+                        <div class="nutrition-grid" id="modal-nutrition">
+                            <!-- Nutrition facts will be populated here -->
+                        </div>
+
+                        <!-- Ingredients List -->
+                        <h3><i class="fas fa-list"></i> Ingredients</h3>
+                        <ul id="modal-ingredients" class="ingredients-list">
+                            <!-- Ingredients will be populated here -->
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <!-- Cooking Instructions -->
+                        <h3><i class="fas fa-list-ol"></i> Cooking Instructions</h3>
+                        <ol id="modal-instructions" class="instructions-list">
+                            <!-- Instructions will be populated here -->
+                        </ol>
+
+                        <!-- Rating System -->
+                        <h3><i class="fas fa-star"></i> Rate this Recipe</h3>
+                        <div class="rating" id="recipe-rating">
+                            <span class="rating-star" data-value="1">★</span>
+                            <span class="rating-star" data-value="2">★</span>
+                            <span class="rating-star" data-value="3">★</span>
+                            <span class="rating-star" data-value="4">★</span>
+                            <span class="rating-star" data-value="5">★</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">
+        <i class="fas fa-info-circle"></i>
+        <span id="toast-message"></span>
+    </div>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>SmartRecipe</h3>
+                <p>Create delicious meals with ingredients you already have. Reduce food waste and explore new recipes.</p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#ingredients">Ingredients</a></li>
+                    <li><a href="#recipes">Recipes</a></li>
+                    <li><a href="https://github.com/Satyam1042716/smart-recipe-generator">About</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <ul class="footer-links">
+                    <li><a href="mailto:satyamjaiswal1042@gmail.com">satyamjaiswal1042@gmail.com</a></li>
+                    <li><a href="tel:+91 7571022845">+91 -7571022845</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 SmartRecipe Generator. All rights reserved.</p>
+        </div>
+    </footer>
+
+    
+</body>
+</html>
