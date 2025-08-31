@@ -5,7 +5,7 @@
 [![Made with JavaScript](https://img.shields.io/badge/Made%20with-JavaScript-yellow?style=for-the-badge&logo=javascript)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)  
 [![Deployed on Netlify](https://img.shields.io/badge/Deployed%20on-Netlify-blue?style=for-the-badge&logo=netlify)](https://smart-recipe-98.netlify.app)  
 
-👉 **[Live Demo on Netlify](smart-recipe-98.netlify.app)**  
+👉 **[Live Demo on Netlify](https://smart-recipe-98.netlify.app/)**  
 
 ---
 
